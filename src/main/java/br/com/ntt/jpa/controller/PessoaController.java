@@ -33,6 +33,12 @@ public class PessoaController {
         return new ResponseEntity<>(pessoa, HttpStatus.OK);
     }
 
+    @DeleteMapping("/deletarCadastro/{id}")
+    public ResponseEntity<PessoaDto> deletarCadastro(@PathVariable String id) {
+        PessoaDto pessoaDeletada = getPessoaService().deletarCadastro(Long.parseLong(id));
+        return new ResponseEntity<>(pessoaDeletada, HttpStatus.OK);
+    }
+
     public PessoaService getPessoaService() {
         return pessoaService;
     }

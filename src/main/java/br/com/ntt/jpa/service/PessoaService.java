@@ -10,4 +10,5 @@ public interface PessoaService {
     List<PessoaDto> getListaPessoas();
     PessoaDto getPessoaPorId(Long id);
     void cadastrarPessoa(PessoaDto pessoa);
+    PessoaDto deletarCadastro(Long id);
 }
