@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
@@ -19,8 +20,14 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<StandardError> pessoaSemNome (MethodArgumentNotValidException ex, HttpServletRequest request) {
-        StandardError standardError = new StandardError(HttpStatus.NOT_ACCEPTABLE.value(), "O nome não pode vir nulo ou em branco!", LocalDateTime.now());
+    public ResponseEntity<StandardError> pessoaSemNome(MethodArgumentNotValidException ex, HttpServletRequest request) {
+        StandardError standardError = new StandardError(HttpStatus.NOT_ACCEPTABLE.value(), ex.getMessage(), LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(standardError);
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<StandardError> conteudoUnico(SQLIntegrityConstraintViolationException ex, HttpServletRequest request) {
+        StandardError standardError = new StandardError(HttpStatus.NOT_ACCEPTABLE.value(), ex.getMessage(), LocalDateTime.now());
+        return  ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(standardError);
     }
 }

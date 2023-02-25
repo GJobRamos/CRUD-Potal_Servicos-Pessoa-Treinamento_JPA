@@ -1,10 +1,11 @@
 package br.com.ntt.jpa.model;
 
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Getter // a dependência projectlombok permite a anotaçao para o controle das criaçoes de getters para que o código fique enxuto
 @Setter // a dependência projectlombok permite a anotaçao para o controle das criaçoes de setters para que o código fique enxuto
@@ -16,7 +17,9 @@ public class Pessoa {
     private Long id;
     private String nome;
     private String sobrenome;
+    @Column(unique = true)
     private String cpf;
+    @Column(unique = true)
     private String email;
     @OneToOne
     private Endereco endereco;
